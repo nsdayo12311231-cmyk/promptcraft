@@ -30,7 +30,7 @@ export default function Home() {
       } else {
         setOutput(`エラー: ${data.error}`)
       }
-    } catch (error) {
+    } catch {
       setOutput('通信エラーが発生しました')
     } finally {
       setIsLoading(false)
@@ -40,7 +40,10 @@ export default function Home() {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
       e.preventDefault()
-      handleSubmit(e as any)
+      const syntheticEvent = {
+        preventDefault: () => {},
+      } as React.FormEvent
+      handleSubmit(syntheticEvent)
     }
   }
 
