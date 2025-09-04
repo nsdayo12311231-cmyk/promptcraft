@@ -1,8 +1,8 @@
-import OpenAI from 'openai'
+import { OpenAI } from 'openai'
 import { NextRequest, NextResponse } from 'next/server'
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY!,
 })
 
 const SYSTEM_PROMPT = `あなたはStable Diffusion専門のプロンプト生成AIです。
