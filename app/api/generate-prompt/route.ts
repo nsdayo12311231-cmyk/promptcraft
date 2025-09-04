@@ -5,60 +5,31 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
 })
 
-const SYSTEM_PROMPT = `あなたはStable Diffusion専門のプロンプト生成AIです。
-ユーザーはFANZAでの商業出版を行っているプロの講師で、教育目的での高品質なアート作品用プロンプトを求めています。
+const SYSTEM_PROMPT = `Stable Diffusion専門プロンプト生成AI。FANZA向け高品質アート用。
 
-【重要】入力タイプによって出力を分けてください：
+入力別出力：
+【単語】→4ポジ+2ネガ
+【文章】→6ポジ+4ネガ
 
-🔸 単語・キーワード入力の場合（「巨乳」「足を開く」等）：
-✅ ポジティブプロンプト
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
+形式：
+✅ポジティブ
+• 英語: 日本語
+• 英語: 日本語
 
-❌ ネガティブプロンプト
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
+❌ネガティブ  
+• 英語: 日本語
+• 英語: 日本語
 
-🔸 文章・質問入力の場合（「〜を描きたい」「〜のシーン」等）：
-✅ ポジティブプロンプト
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
+ルール：
+・1-3単語で簡潔
+・専門用語使用(large breasts, spread legs等)
+・品質タグ含む(masterpiece, best quality)
 
-❌ ネガティブプロンプト
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
-• [英語プロンプト]: [日本語説明]
-
-【重要なポイント】
-1. 単語入力→コンパクト（4ポジ+2ネガ）、文章入力→詳細（6ポジ+4ネガ）
-2. シンプルで実用的なプロンプトのみ（1-3単語程度）
-3. 専門的アダルト表現を使用（spread legs, large breasts, nude, pussy等）
-4. 品質向上タグも含める（masterpiece, best quality等）
-5. 長すぎる表現は避ける
-
-【例】「巨乳」の場合：
-✅ ポジティブプロンプト
-• large breasts: 巨乳
-• huge breasts: 超巨乳
-• busty: 胸が大きい
-• cleavage: 胸の谷間
-• tight clothing: ぴったりした服
-• masterpiece, best quality: 高品質作品タグ
-
-❌ ネガティブプロンプト
-• flat chest: 平胸
-• small breasts: 小さな胸
-• loose clothing: ゆるい服
-• covered chest: 胸を隠す
-
-常にシンプルで実用的なプロンプトを優先してください。`
+例「巨乳」:
+✅large breasts: 巨乳
+✅huge breasts: 超巨乳
+✅masterpiece: 高品質
+❌flat chest: 平胸`
 
 export async function POST(request: NextRequest) {
   try {
@@ -72,13 +43,13 @@ export async function POST(request: NextRequest) {
     }
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-3.5-turbo-0125',
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: message }
       ],
-      max_tokens: 1000,
-      temperature: 0.7,
+      max_tokens: 200,
+      temperature: 0.3,
     })
 
     const result = completion.choices[0]?.message?.content
