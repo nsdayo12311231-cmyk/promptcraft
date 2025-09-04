@@ -49,13 +49,10 @@ export default function Home() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-6 sm:mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3 sm:mb-4">
-            GPTwo
+            PromptCraft
           </h1>
           <p className="text-lg sm:text-xl text-gray-300">
             Stable Diffusion プロンプト生成支援
-          </p>
-          <p className="text-xs sm:text-sm text-gray-400 mt-2">
-            ChatGPTを使わずに無料でプロンプト生成
           </p>
           <div className="mt-4 text-xs text-gray-500 bg-gray-800 rounded-lg p-3">
             💡 <strong>使い方:</strong> 単語入力でコンパクト、文章入力で詳細な結果が得られます
@@ -75,7 +72,7 @@ export default function Home() {
                 onKeyDown={handleKeyDown}
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical text-white placeholder-gray-400 text-sm sm:text-base"
                 rows={3}
-                placeholder="例: 巨乳 (コンパクト) / 胸の大きな女性を描きたい (詳細)&#10;&#10;Enterで送信、Shift+Enterで改行"
+                placeholder="例: 女性、巨乳、悩んでる顔、走ってるなど記入してください&#10;&#10;Enterで送信、Shift+Enterで改行"
                 required
               />
             </div>
